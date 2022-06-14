@@ -1,0 +1,31 @@
+format_version: 10
+pipelines:
+  dcc-web:
+    group: dcc
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      ? ''
+      : git: https://bitbucket.org/amkortechnology/dcc-docker.git
+        username: maquino-amkor
+        shallow_clone: false
+        auto_update: false
+        branch: master
+        destination: dcc
+        encrypted_password: AES:SdNZYU+7brsijO8Qhw6oiQ==:Q6mMLy+wrp+yQHe4636+G+G6eblRWr9/LvjGC+gad5c=
+    stages:
+    - source:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          git:
+            timeout: 0
+            tasks:
+            - exec:
+                command: git
+                run_if: passed
